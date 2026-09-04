@@ -1,0 +1,297 @@
+:root {
+  --navy: #2b3a67;
+  --navy-deep: #1f2b4d;
+  --blue: #3f5aa6;
+  --blue-soft: #6f86c9;
+  --ink: #26304a;
+  --cream: #fbfaf6;
+  --paper: #ffffff;
+  --gold: #b98a3e;
+  --shadow: 0 18px 50px rgba(31, 43, 77, 0.22);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "EB Garamond", Georgia, serif;
+  color: var(--ink);
+  background:
+    radial-gradient(1200px 600px at 15% -10%, rgba(111, 134, 201, 0.25), transparent 60%),
+    radial-gradient(1000px 500px at 100% 110%, rgba(43, 58, 103, 0.22), transparent 60%),
+    linear-gradient(160deg, #eef1fa 0%, #f7f8fc 40%, #eef1fa 100%);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 20px 60px;
+}
+
+/* ---------- Intro ---------- */
+.intro { text-align: center; margin-bottom: 28px; }
+.intro__eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.35em;
+  font-size: 0.8rem;
+  color: var(--blue);
+  margin: 0 0 6px;
+}
+.intro__title {
+  font-family: "Great Vibes", cursive;
+  font-weight: 400;
+  color: var(--navy);
+  font-size: clamp(2.6rem, 8vw, 4rem);
+  line-height: 1;
+  margin: 0 0 6px;
+}
+.intro__date {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.15rem;
+  letter-spacing: 0.05em;
+  color: var(--blue);
+  margin: 0 0 14px;
+}
+.intro__lead {
+  max-width: 520px;
+  margin: 0 auto;
+  color: #4a5573;
+  font-size: 1.02rem;
+  line-height: 1.6;
+}
+
+/* ---------- Entry form ---------- */
+.entry {
+  background: var(--paper);
+  border: 1px solid rgba(63, 90, 166, 0.15);
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+  margin-bottom: 34px;
+}
+.entry__label {
+  display: block;
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--navy);
+  font-size: 1.15rem;
+  margin-bottom: 10px;
+}
+.entry__row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.entry__input {
+  flex: 1 1 260px;
+  padding: 14px 16px;
+  border: 1.5px solid rgba(63, 90, 166, 0.3);
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 1.05rem;
+  color: var(--ink);
+  background: #fdfdff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.entry__input:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 4px rgba(63, 90, 166, 0.15);
+}
+.entry__hint {
+  margin: 12px 2px 0;
+  font-size: 0.9rem;
+  color: #7a839c;
+}
+.entry__hint.is-error { color: #c0392b; }
+
+/* ---------- Buttons ---------- */
+.btn {
+  border: none;
+  cursor: pointer;
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: 0.03em;
+  padding: 14px 22px;
+  border-radius: 12px;
+  transition: transform 0.15s, box-shadow 0.2s, background 0.2s;
+}
+.btn:active { transform: translateY(1px); }
+.btn--primary {
+  background: linear-gradient(135deg, var(--blue) 0%, var(--navy) 100%);
+  color: #fff;
+  box-shadow: 0 10px 24px rgba(43, 58, 103, 0.3);
+}
+.btn--primary:hover { box-shadow: 0 14px 30px rgba(43, 58, 103, 0.4); }
+.btn--ghost {
+  background: transparent;
+  color: var(--navy);
+  border: 1.5px solid rgba(63, 90, 166, 0.4);
+}
+.btn--ghost:hover { background: rgba(63, 90, 166, 0.08); }
+
+/* ---------- Card stage ---------- */
+.card-stage { animation: rise 0.5s ease both; }
+@keyframes rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.card {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  margin: 0 auto;
+  aspect-ratio: 5 / 7;
+  background: var(--cream);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.card__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none; /* shown by JS only when a real image loads */
+}
+.card__img.is-visible { display: block; }
+
+/* ---------- CSS recreation fallback ---------- */
+.card__fallback {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(140px 140px at 8% 8%, rgba(63, 90, 166, 0.35), transparent 70%),
+    radial-gradient(150px 150px at 92% 6%, rgba(43, 58, 103, 0.35), transparent 70%),
+    radial-gradient(160px 160px at 6% 94%, rgba(63, 90, 166, 0.35), transparent 70%),
+    radial-gradient(160px 160px at 94% 92%, rgba(43, 58, 103, 0.35), transparent 70%),
+    var(--cream);
+  padding: 5% 4%;
+}
+.card__fallback.is-hidden { display: none; }
+
+.fallback__flourish {
+  position: absolute;
+  width: 34%;
+  height: 24%;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(111,134,201,0.9), rgba(63,90,166,0.5) 45%, transparent 70%),
+    radial-gradient(circle at 65% 55%, rgba(43,58,103,0.85), transparent 60%),
+    radial-gradient(circle at 45% 75%, rgba(95,120,190,0.75), transparent 60%);
+  filter: blur(1px);
+  opacity: 0.85;
+}
+.fallback__flourish--tl { top: 0; left: 0; border-radius: 0 0 60% 0; }
+.fallback__flourish--tr { top: 0; right: 0; border-radius: 0 0 0 60%; }
+.fallback__flourish--bl { bottom: 0; left: 0; border-radius: 0 60% 0 0; }
+.fallback__flourish--br { bottom: 0; right: 0; border-radius: 60% 0 0 0; }
+
+.fallback__arch {
+  position: relative;
+  height: 100%;
+  background: var(--paper);
+  border: 1.5px solid rgba(43, 58, 103, 0.4);
+  border-radius: 50% 50% 8px 8px / 22% 22% 3% 3%;
+  padding: 8% 7% 5%;
+  text-align: center;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5%;
+}
+.fallback__arch p { margin: 0; line-height: 1.25; color: var(--ink); }
+.fb-families { font-family: "Great Vibes", cursive; font-size: clamp(0.8rem, 3.2vw, 1.1rem); color: var(--navy); }
+.fb-parents { font-family: "Cormorant Garamond", serif; font-weight: 600; font-size: clamp(0.62rem, 2.5vw, 0.9rem); }
+.fb-amp-sm { font-size: clamp(0.55rem, 2.2vw, 0.8rem); }
+.fb-invite { font-style: italic; font-size: clamp(0.55rem, 2.2vw, 0.8rem); margin: 2% 0; }
+.fb-name { font-family: "Great Vibes", cursive; color: var(--navy); font-size: clamp(1.6rem, 7vw, 2.6rem); line-height: 0.95; }
+.fb-amp { font-family: "Great Vibes", cursive; color: var(--navy); font-size: clamp(1rem, 4vw, 1.6rem); }
+.fb-detail { font-size: clamp(0.52rem, 2.1vw, 0.78rem); margin-top: 2%; }
+.fb-nb { font-style: italic; font-size: clamp(0.5rem, 2vw, 0.72rem); margin-top: 3%; }
+.fb-colour { color: var(--blue); font-weight: 600; font-size: clamp(0.55rem, 2.2vw, 0.8rem); margin-top: 2%; }
+.fb-rsvp { font-family: "Great Vibes", cursive; color: var(--navy); font-size: clamp(0.9rem, 3.5vw, 1.3rem); margin-top: 2%; }
+.fb-admits { font-weight: 700; font-style: italic; font-size: clamp(0.6rem, 2.4vw, 0.9rem); margin-top: 3%; color: var(--navy-deep); }
+
+/* ---------- Number stamp ---------- */
+.stamp {
+  position: absolute;
+  left: 50%;
+  bottom: 3.5%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 18px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1.5px solid var(--gold);
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(31, 43, 77, 0.25);
+  backdrop-filter: blur(2px);
+}
+.stamp__label {
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.6rem;
+  color: var(--gold);
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 600;
+}
+.stamp__number {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: 0.08em;
+  color: var(--navy-deep);
+  line-height: 1;
+}
+.stamp__name {
+  font-size: 0.72rem;
+  font-style: italic;
+  color: #5a6480;
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.stamp__name:empty { display: none; }
+
+/* ---------- Actions ---------- */
+.actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 26px;
+}
+.actions__note {
+  text-align: center;
+  color: #7a839c;
+  font-size: 0.92rem;
+  margin-top: 14px;
+}
+
+/* ---------- Footer ---------- */
+.foot {
+  text-align: center;
+  margin-top: 48px;
+  color: #98a1ba;
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+@media (max-width: 420px) {
+  .entry__row { flex-direction: column; }
+  .btn { width: 100%; }
+}

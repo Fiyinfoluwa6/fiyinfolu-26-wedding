@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Folusho &amp; Fiyinfoluwa · Wedding Invitation</title>
+  <meta name="description" content="Enter your invitation code to generate your personal admit card for the wedding of Folusho & Fiyinfoluwa — October 10th, 2026." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Great+Vibes&family=EB+Garamond:ital@0;1&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <main class="page">
+    <header class="intro">
+      <p class="intro__eyebrow">You're Invited</p>
+      <h1 class="intro__title">Folusho &amp; Fiyinfoluwa</h1>
+      <p class="intro__date">October 10th, 2026 · Lagos</p>
+      <p class="intro__lead">
+        Enter the invitation code you received to generate your personal admit card.
+        Each code produces one unique card number — save or screenshot it and present it at the door.
+      </p>
+    </header>
+
+    <!-- CODE ENTRY -->
+    <section class="entry" id="entry">
+      <form class="entry__form" id="codeForm" autocomplete="off">
+        <label class="entry__label" for="codeInput">Invitation Code</label>
+        <div class="entry__row">
+          <input
+            type="text"
+            id="codeInput"
+            class="entry__input"
+            placeholder="e.g. your name or the code you were given"
+            aria-label="Invitation code"
+            maxlength="60"
+            required
+          />
+          <button type="submit" class="btn btn--primary" id="generateBtn">Generate my card</button>
+        </div>
+        <p class="entry__hint" id="entryHint">Tip: the same code always gives you the same card number.</p>
+      </form>
+    </section>
+
+    <!-- CARD -->
+    <section class="card-stage" id="cardStage" hidden>
+      <div class="card" id="card">
+        <!-- Real invitation image (drop your file at assets/invitation.jpg to use it) -->
+        <img id="cardImg" class="card__img" alt="Wedding invitation for Folusho & Fiyinfoluwa" />
+
+        <!-- CSS recreation fallback (shown if no image file is present) -->
+        <div class="card__fallback" id="cardFallback">
+          <div class="fallback__flourish fallback__flourish--tl"></div>
+          <div class="fallback__flourish fallback__flourish--tr"></div>
+          <div class="fallback__flourish fallback__flourish--bl"></div>
+          <div class="fallback__flourish fallback__flourish--br"></div>
+          <div class="fallback__arch">
+            <p class="fb-families">The Families of</p>
+            <p class="fb-parents">Late Mr Oluwole &amp; Mrs Abosede Ishola</p>
+            <p class="fb-amp-sm">&amp;</p>
+            <p class="fb-parents">Dr Samson &amp; Mrs Yemisi Oyelami</p>
+            <p class="fb-invite">specially invite you to the<br />Wedding ceremony of their children</p>
+            <p class="fb-name">Folusho</p>
+            <p class="fb-amp">&amp;</p>
+            <p class="fb-name">Fiyinfoluwa</p>
+            <p class="fb-detail"><strong>October 10th, 2026</strong> | Time: 12:00 noon</p>
+            <p class="fb-detail"><em>Engagement @ All Seasons event centre</em><br />24, Lateef Jakande Road, Agindibi Lagos</p>
+            <p class="fb-detail">Reception follows at the same venue<br />Time: 2:00pm</p>
+            <p class="fb-nb"><em>NB: Church Service by 10am at All Season event centre</em></p>
+            <p class="fb-colour">Colour of the day: Blue</p>
+            <p class="fb-rsvp">Rsvp</p>
+            <p class="fb-detail">Ishola Ayobami &mdash; 08110744757<br />Timileyin Oyelami &mdash; 09132884544</p>
+            <p class="fb-admits">Card Admits One</p>
+          </div>
+        </div>
+
+        <!-- Unique number stamp (overlaid on the card) -->
+        <div class="stamp" id="stamp">
+          <span class="stamp__label">Admit One · Card No.</span>
+          <span class="stamp__number" id="stampNumber">FF26-0000</span>
+          <span class="stamp__name" id="stampName"></span>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button type="button" class="btn btn--primary" id="downloadBtn">⬇ Download card</button>
+        <button type="button" class="btn btn--ghost" id="againBtn">Enter a different code</button>
+      </div>
+      <p class="actions__note">
+        On mobile you can also just screenshot this card. Present the card number at the entrance.
+      </p>
+    </section>
+
+    <footer class="foot">
+      <p>Made with love for Folusho &amp; Fiyinfoluwa · 10.10.2026</p>
+    </footer>
+  </main>
+
+  <!-- html2canvas for reliable image download -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
