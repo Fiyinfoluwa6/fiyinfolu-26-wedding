@@ -10,7 +10,7 @@
  */
 window.WEDDING_CONFIG = {
   // Paste your Google Apps Script Web App URL here:
-  sheetUrl: "",
+  sheetUrl: "https://script.google.com/macros/s/AKfycbwRtSCoDETky3u7IOrpzV-6mJKrYDmLyqQeqrJx3QyRQxdBnNiRDpfFPS-eN8cHReKJQQ/exec",
 
   // The image used as the card. Your uploaded flyer:
   imagePath: "assets/invitation.jpeg",
