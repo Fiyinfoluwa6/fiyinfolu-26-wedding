@@ -1,10 +1,7 @@
 (function () {
   "use strict";
 
-  // ---- Config -------------------------------------------------------------
-  var PREFIX = "FF26-";              // shows on the card: FF26-0473
   var IMAGE_PATH = "assets/invitation.jpg"; // drop the real card here to use it
-  var SERIAL_SPACE = 9000;           // numbers land in 1000..9999 range
 
   // ---- Elements -----------------------------------------------------------
   var form = document.getElementById("codeForm");
@@ -21,75 +18,82 @@
 
   var currentSerial = "";
 
-  // ---- Try to load the couple's real invitation image ---------------------
-  // If assets/invitation.jpg exists it is used; otherwise the CSS recreation
-  // stays visible. Either way the number stamp is overlaid on top.
-  var probe = new Image();
-  probe.onload = function () {
-    cardImg.src = IMAGE_PATH;
-    cardImg.classList.add("is-visible");
-    cardFallback.classList.add("is-hidden");
-  };
-  probe.onerror = function () {
-    // keep the CSS recreation
-  };
-  probe.src = IMAGE_PATH + "?v=" + Date.now();
+  // ---- Guest list ---------------------------------------------------------
+  var GUESTS = window.WEDDING_GUESTS || { cardPrefix: "FF26-", approvedNames: [], codes: [] };
+  var CARD_PREFIX = GUESTS.cardPrefix || "FF26-";
 
-  // ---- Deterministic serial number from a code ----------------------------
-  // Same code -> same number, always. Different codes -> (almost always)
-  // different numbers. Fully client-side, no server needed.
-  function hashString(str) {
-    // FNV-1a 32-bit hash
-    var h = 0x811c9dc5;
-    for (var i = 0; i < str.length; i++) {
-      h ^= str.charCodeAt(i);
-      h = (h + ((h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24))) >>> 0;
-    }
-    return h >>> 0;
-  }
-
-  function normalize(code) {
-    return code.trim().toLowerCase().replace(/\s+/g, " ");
-  }
-
-  function serialFor(code) {
-    var h = hashString(normalize(code));
-    var n = (h % SERIAL_SPACE) + 1000; // 1000..9999
-    return PREFIX + String(n).padStart(4, "0");
-  }
-
+  function pad4(n) { return String(n).padStart(4, "0"); }
+  function normCode(s) { return s.toUpperCase().replace(/[^A-Z0-9]/g, ""); }
+  function normName(s) { return s.trim().toLowerCase().replace(/\s+/g, " "); }
   function titleCase(str) {
     return str.replace(/\S+/g, function (w) {
       return w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
     });
   }
 
-  // ---- Generate ----------------------------------------------------------
+  // Build lookup tables: input -> { number, name }
+  var codeMap = {};
+  (GUESTS.codes || []).forEach(function (code, i) {
+    codeMap[normCode(code)] = { number: CARD_PREFIX + pad4(i + 1), name: "" };
+  });
+
+  var nameMap = {};
+  var offset = (GUESTS.codes || []).length;
+  (GUESTS.approvedNames || []).forEach(function (nm, j) {
+    nameMap[normName(nm)] = { number: CARD_PREFIX + pad4(offset + j + 1), name: titleCase(nm) };
+  });
+
+  function lookup(raw) {
+    var byCode = codeMap[normCode(raw)];
+    if (byCode) return byCode;
+    var byName = nameMap[normName(raw)];
+    if (byName) return byName;
+    return null;
+  }
+
+  // ---- Try to load the couple's real invitation image ---------------------
+  var probe = new Image();
+  probe.onload = function () {
+    cardImg.src = IMAGE_PATH;
+    cardImg.classList.add("is-visible");
+    cardFallback.classList.add("is-hidden");
+  };
+  probe.onerror = function () { /* keep the CSS recreation */ };
+  probe.src = IMAGE_PATH + "?v=" + Date.now();
+
+  // ---- Generate -----------------------------------------------------------
   form.addEventListener("submit", function (e) {
     e.preventDefault();
-    var code = input.value.trim();
-    if (!code) {
-      hint.textContent = "Please enter your invitation code first.";
-      hint.classList.add("is-error");
-      input.focus();
+    var raw = input.value.trim();
+    if (!raw) {
+      showError("Please enter your invitation code first.");
       return;
     }
+
+    var match = lookup(raw);
+    if (!match) {
+      showError("That code isn't recognised. Please check your invitation and try again.");
+      return;
+    }
+
     hint.classList.remove("is-error");
     hint.textContent = "Tip: the same code always gives you the same card number.";
 
-    currentSerial = serialFor(code);
+    currentSerial = match.number;
     stampNumber.textContent = currentSerial;
-
-    // If the code looks like a name, show it on the card for a nicer keepsake.
-    if (/[a-zA-Z]/.test(code) && code.length <= 34) {
-      stampName.textContent = titleCase(code);
-    } else {
-      stampName.textContent = "";
-    }
+    stampName.textContent = match.name || "";
 
     stage.hidden = false;
     stage.scrollIntoView({ behavior: "smooth", block: "start" });
   });
+
+  function showError(msg) {
+    hint.textContent = msg;
+    hint.classList.add("is-error");
+    stage.hidden = true;
+    input.focus();
+    input.select();
+  }
 
   // ---- Enter a different code --------------------------------------------
   againBtn.addEventListener("click", function () {

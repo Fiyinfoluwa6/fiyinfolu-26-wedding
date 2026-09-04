@@ -10,10 +10,41 @@ Guests enter an **invitation code**, and the site instantly generates a **unique
 
 ## How it works
 
-- A guest types any code they were given (a passcode, or even their name).
-- The site turns that code into a fixed serial number like `FF26-0473`.
-- The **same code always produces the same number**, so re-entering it is safe and there are no duplicates for different codes.
+- A guest types either their **approved name** or the **unique invite code** they were given.
+- If it's on the guest list, the site shows a fixed card number like `FF26-0042` stamped on the invitation.
+- Anything **not** on the list is rejected ("That code isn't recognised…"), so outsiders can't generate a card.
+- The **same code always produces the same number**, so re-entering is safe.
 - Everything runs in the browser — **no server, no database, no cost**.
+
+## Managing invite codes
+
+Two ways for a guest to get a card (both controlled):
+
+1. **Unique invite codes** — one per guest, e.g. `WED-7KQP`. Codes live in `js/guests.js`.
+2. **Approved names** — add invited guests' full names to the `approvedNames` list in `js/guests.js`, and they can just type their name.
+
+### Generate / regenerate codes
+
+```bash
+node scripts/generate-guests.js 150   # make 150 codes (change the number)
+```
+
+This writes three files:
+- `js/guests.js` — the list the live site checks against
+- `CODES.md` — a copy-paste table of **Card No. + Invite Code**
+- `codes.html` — a **printable** sheet (open it and click Print) with a blank column to write each guest's name
+
+> ⚠️ Re-running the generator creates a **fresh** set — previously handed-out codes stop working.
+
+### Add named guests
+
+Edit `js/guests.js` and fill in `approvedNames`, e.g.:
+
+```js
+approvedNames: ["Ada Obi", "Tunde Bello"],
+```
+
+Commit & push — changes go live in about a minute.
 
 ## Using YOUR actual invitation image (recommended)
 
