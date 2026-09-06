@@ -18,6 +18,16 @@
       <p class="intro__eyebrow">You're Invited</p>
       <h1 class="intro__title">Folusho &amp; Fiyinfoluwa</h1>
       <p class="intro__date">October 10th, 2026 · Lagos</p>
+
+      <!-- Countdown to the wedding -->
+      <div class="countdown" id="countdown" aria-label="Countdown to the wedding">
+        <div class="cd-unit"><span class="cd-num" id="cdDays">--</span><span class="cd-label">Days</span></div>
+        <div class="cd-unit"><span class="cd-num" id="cdHours">--</span><span class="cd-label">Hours</span></div>
+        <div class="cd-unit"><span class="cd-num" id="cdMins">--</span><span class="cd-label">Minutes</span></div>
+        <div class="cd-unit"><span class="cd-num" id="cdSecs">--</span><span class="cd-label">Seconds</span></div>
+      </div>
+      <p class="countdown__msg" id="countdownMsg"></p>
+
       <p class="intro__lead">
         Enter your full name to generate your personal admit card. Your name and a unique
         card code will appear on the invitation — save it or screenshot it, and present it at the door.
@@ -95,5 +105,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="js/config.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/countdown.js"></script>
 </body>
 </html>
